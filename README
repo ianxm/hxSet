@@ -1,0 +1,26 @@
+hxSet
+-----
+
+This is a simple 'set' class.  It supports basic set operations.  It is implemented with a
+list.
+
+add(item :T, ?cmp :T->T->Bool)
+        add an item to the set
+
+has(item :T, ?cmp :T->T->Bool)
+        returns true if the given item is in the set
+
+union(otherItems :Iterable<T>, ?cmp :T->T->Bool)
+        add the items from the given iterable to the set
+
+intersection(otherItems :Iterable<T>, ?cmp :T->T->Bool)
+        remove items which are not in the given iterable
+
+minus(otherItems :Iterable<T>, ?cmp :T->T->Bool)
+        remove items in given iterable
+
+clear()
+        empty the set
+
+iterator()
+        iterate over items in the set
