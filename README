@@ -1,8 +1,7 @@
 hxSet
 -----
 
-This is a simple 'set' class.  It supports basic set operations.  It is implemented with a
-list.
+This is a simple 'set' class.  It supports basic set operations.  It is implemented with a list.
 
 add(item :T, ?cmp :T->T->Bool)
         add an item to the set
