@@ -2,5 +2,5 @@
     <tag v="cross" />
     <user name="ianxm"/>
     <description>simple set class</description>
-    <version name="1.0">initial haxelib release</version>
+    <version name="1.1">added isEmpty</version>
 </project>

@@ -34,6 +34,14 @@ class Set<T>
     }
 
     /**
+        returns true if the set is empty
+     */
+    public function isEmpty()
+    {
+        return( vals.isEmpty() );
+    }
+
+    /**
         add the items from the given iterable to the set
      */
     public function union(otherItems :Iterable<T>, ?cmp :T->T->Bool)

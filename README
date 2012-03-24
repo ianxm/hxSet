@@ -3,11 +3,17 @@ hxSet
 
 This is a simple 'set' class.  It supports basic set operations.  It is implemented with a list.
 
+new()
+        create an empty set
+
 add(item :T, ?cmp :T->T->Bool)
         add an item to the set
 
 has(item :T, ?cmp :T->T->Bool)
         returns true if the given item is in the set
+
+isEmpty()
+        returns true if the set is empty
 
 union(otherItems :Iterable<T>, ?cmp :T->T->Bool)
         add the items from the given iterable to the set
