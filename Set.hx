@@ -6,10 +6,11 @@ using Lambda;
  */
 class Set<T>
 {
+    public var length(getLength,null) :Int;
     private var vals :List<T>;
 
     /**
-        create an empty set
+       create an empty set
      */
     public function new()
     {
@@ -17,12 +18,38 @@ class Set<T>
     }
 
     /**
-        add an item to the set
+       get the number of items in the set
      */
-    public function add(item :T, ?cmp :T->T->Bool)
+    private function getLength()
+    {
+        return vals.length;
+    }
+
+    /**
+       add an item to the set.
+       returns true if it was added
+     */
+    public function add(item :T, ?cmp :T->T->Bool) :Bool
     {
         if( !vals.has(item, cmp) )
+        {
             vals.add(item);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+       remove items from the set that are selected by the given predicate
+       returns the number of items removed
+     */
+    public function remove(pred :T->Bool) :Int
+    {
+        var count = 0;
+        for( ii in vals )
+            if( pred(ii) )
+                count += vals.remove(ii) ? 1 : 0;
+        return count;
     }
 
     /**
@@ -43,31 +70,40 @@ class Set<T>
 
     /**
         add the items from the given iterable to the set
+        returns the number of items added
      */
-    public function union(otherItems :Iterable<T>, ?cmp :T->T->Bool)
+    public function union(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
     {
+        var count = 0;
         for( ii in otherItems )
-            add(ii, cmp);
+            count += add(ii, cmp) ? 1 : 0;
+        return count;
     }
 
     /**
         remove items which are not in the given iterable
+        returns the number of items removed
      */
-    public function intersection(otherItems :Iterable<T>, ?cmp :T->T->Bool)
+    public function intersection(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
     {
+        var count = 0;
         for( ii in vals )
             if( !otherItems.has(ii, cmp) )
-                vals.remove(ii);
+                count += vals.remove(ii) ? 1 : 0;
+        return count;
     }
 
     /**
-        remove items in given iterable
+        remove items what are in given iterable
+        return the number of items removed
      */
-    public function minus(otherItems :Iterable<T>, ?cmp :T->T->Bool)
+    public function minus(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
     {
+        var count = 0;
         for( ii in vals )
             if( otherItems.has(ii, cmp) )
-                vals.remove(ii);
+                count += vals.remove(ii) ? 1 : 0;
+        return count;
     }
 
     /**

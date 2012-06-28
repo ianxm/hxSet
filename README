@@ -3,11 +3,19 @@ hxSet
 
 This is a simple 'set' class.  It supports basic set operations.  It is implemented with a list.
 
+length
+        property that tells the number of items in the set
+
 new()
         create an empty set
 
-add(item :T, ?cmp :T->T->Bool)
+add(item :T, ?cmp :T->T->Bool) :Bool
         add an item to the set
+        returns true if it was added
+
+remove(pred :T->Bool) :Int
+       remove items from the set that are selected by the given predicate
+       returns the number of items removed
 
 has(item :T, ?cmp :T->T->Bool)
         returns true if the given item is in the set
@@ -15,14 +23,17 @@ has(item :T, ?cmp :T->T->Bool)
 isEmpty()
         returns true if the set is empty
 
-union(otherItems :Iterable<T>, ?cmp :T->T->Bool)
+union(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
         add the items from the given iterable to the set
+        returns the number of items added
 
-intersection(otherItems :Iterable<T>, ?cmp :T->T->Bool)
+intersection(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
         remove items which are not in the given iterable
+        returns the number of items removed
 
-minus(otherItems :Iterable<T>, ?cmp :T->T->Bool)
-        remove items in given iterable
+minus(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
+        remove items what are in given iterable
+        return the number of items removed
 
 clear()
         empty the set
