@@ -1,3 +1,4 @@
+import haxe.FastList;
 using Lambda;
 
 /**
@@ -6,23 +7,16 @@ using Lambda;
  */
 class Set<T>
 {
-    public var length(getLength,null) :Int;
-    private var vals :List<T>;
+    public var length(default,null) :Int;
+    private var vals :FastList<T>;
 
     /**
        create an empty set
      */
     public function new()
     {
-        vals = new List<T>();
-    }
-
-    /**
-       get the number of items in the set
-     */
-    private function getLength()
-    {
-        return vals.length;
+        vals = new FastList<T>();
+        length = 0;
     }
 
     /**
@@ -34,6 +28,7 @@ class Set<T>
         if( !vals.has(item, cmp) )
         {
             vals.add(item);
+            length++;
             return true;
         }
         return false;
@@ -49,6 +44,7 @@ class Set<T>
         for( ii in vals )
             if( pred(ii) )
                 count += vals.remove(ii) ? 1 : 0;
+        length -= count;
         return count;
     }
 
@@ -90,6 +86,7 @@ class Set<T>
         for( ii in vals )
             if( !otherItems.has(ii, cmp) )
                 count += vals.remove(ii) ? 1 : 0;
+        length += count;
         return count;
     }
 
@@ -103,6 +100,7 @@ class Set<T>
         for( ii in vals )
             if( otherItems.has(ii, cmp) )
                 count += vals.remove(ii) ? 1 : 0;
+        length += count;
         return count;
     }
 
@@ -111,11 +109,12 @@ class Set<T>
      */
     public function clear()
     {
-        vals.clear();
+        vals = new FastList<T>();
+        length = 0;
     }
 
     /**
-        iterate over items in the set
+        iterate over items in the set.  order will be filo.
      */
     public function iterator()
     {

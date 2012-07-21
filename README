@@ -39,4 +39,4 @@ clear()
         empty the set
 
 iterator()
-        iterate over items in the set
+        iterate over items in the set.  order will be filo.

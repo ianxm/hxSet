@@ -110,8 +110,8 @@ class TestSet extends haxe.unit.TestCase
         set.add(2);
         set.add(3);
         var iter = set.iterator();
-        assertEquals(iter.next(), 1);
-        assertEquals(iter.next(), 2);
         assertEquals(iter.next(), 3);
+        assertEquals(iter.next(), 2);
+        assertEquals(iter.next(), 1);
     }
 }
