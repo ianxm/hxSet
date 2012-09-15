@@ -105,6 +105,29 @@ class Set<T>
     }
 
     /**
+        check if sets are equal (made up of the same items).  pass in a cmp function to override item comparison. O(n^2).
+        return true if both sets contain the same (or equivalent if cmp is provided) items
+     */
+    public function equals(otherSet :Set<T>, ?cmp :T->T->Bool) :Bool
+    {
+        if( cmp == null )
+            cmp = function(a,b){ return a==b; }
+        for( ii in vals )
+        {
+            var found = false;
+            for( jj in otherSet.iterator() )
+                if( cmp(ii, jj) )
+                {
+                    found = true;
+                    continue;
+                }
+            if( !found )
+                return false;
+        }
+        return length == otherSet.length;
+    }
+
+    /**
         empty the set
      */
     public function clear()

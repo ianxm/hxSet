@@ -35,6 +35,10 @@ minus(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
         remove items what are in given iterable
         return the number of items removed
 
+equals(otherSet :Set<T>, ?cmp :T->T->Bool) :Bool
+        check if sets are equal (made up of the same items).  pass in a cmp function to override item comparison. O(n^2).
+        return true if both sets contain the same (or equivalent if cmp is provided) items
+
 clear()
         empty the set
 

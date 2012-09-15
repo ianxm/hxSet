@@ -2,5 +2,5 @@
     <tag v="cross" />
     <user name="ianxm"/>
     <description>simple set class</description>
-    <version name="1.3">store vals in FastList</version>
+    <version name="1.4">added equals</version>
 </project>
