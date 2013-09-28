@@ -1,0 +1,13 @@
+{
+  "name": "hxSet",
+  "license": "BSD",
+  "tags": ["cross"],
+  "description": "simple set class",
+  "contributors": ["ianxm"],
+  "releasenote": "updated to haxe3",
+  "version": "1.5.0",
+  "url": "https://github.com/ianxm/hxSet",
+  "dependencies": {
+
+  }
+}

@@ -1,4 +1,4 @@
-import haxe.FastList;
+import haxe.ds.GenericStack;
 using Lambda;
 
 /**
@@ -8,14 +8,14 @@ using Lambda;
 class Set<T>
 {
     public var length(default,null) :Int;
-    private var vals :FastList<T>;
+    private var vals :GenericStack<T>;
 
     /**
        create an empty set
      */
     public function new()
     {
-        vals = new FastList<T>();
+        vals = new GenericStack<T>();
         length = 0;
     }
 
@@ -25,7 +25,7 @@ class Set<T>
      */
     public function add(item :T, ?cmp :T->T->Bool) :Bool
     {
-        if( !vals.has(item, cmp) )
+        if( !has(item, cmp) )
         {
             vals.add(item);
             length++;
@@ -53,7 +53,7 @@ class Set<T>
      */
     public function has(item :T, ?cmp :T->T->Bool)
     {
-        return( vals.has(item, cmp) );
+        return( (cmp==null) ? vals.has(item) : vals.exists( function(a) return cmp(a,item) ) );
     }
 
     /**
@@ -84,9 +84,9 @@ class Set<T>
     {
         var count = 0;
         for( ii in vals )
-            if( !otherItems.has(ii, cmp) )
+            if( !((cmp==null) && otherItems.has(ii) || cmp!=null && otherItems.exists( function(a) return cmp(a,ii) )) )
                 count += vals.remove(ii) ? 1 : 0;
-        length += count;
+        length -= count;
         return count;
     }
 
@@ -98,9 +98,9 @@ class Set<T>
     {
         var count = 0;
         for( ii in vals )
-            if( otherItems.has(ii, cmp) )
+            if( (cmp==null && otherItems.has(ii)) || cmp!=null && otherItems.exists( function(a) return cmp(a,ii) ) )
                 count += vals.remove(ii) ? 1 : 0;
-        length += count;
+        length -= count;
         return count;
     }
 
@@ -132,7 +132,7 @@ class Set<T>
      */
     public function clear()
     {
-        vals = new FastList<T>();
+        vals = new GenericStack<T>();
         length = 0;
     }
 

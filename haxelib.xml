@@ -1,6 +1,0 @@
-<project name="hxSet" url="https://github.com/ianxm/hxSet" license="BSD">
-    <tag v="cross" />
-    <user name="ianxm"/>
-    <description>simple set class</description>
-    <version name="1.4">added equals</version>
-</project>

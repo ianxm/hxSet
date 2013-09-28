@@ -3,9 +3,9 @@ class TestSet extends haxe.unit.TestCase
     public function testHas()
     {
         var set = new Set();
-        assertEquals(set.add(1), true);
-        assertEquals(set.add(2), true);
-        assertEquals(set.add(3), true);
+        assertEquals(true, set.add(1));
+        assertEquals(true, set.add(2));
+        assertEquals(true, set.add(3));
         assertTrue(set.has(1));
         assertTrue(set.has(2));
         assertTrue(set.has(3));
@@ -16,15 +16,15 @@ class TestSet extends haxe.unit.TestCase
     public function testLength()
     {
         var set = new Set();
-        assertEquals(set.length, 0);
-        assertEquals(set.add(1), true);
-        assertEquals(set.length, 1);
-        assertEquals(set.add(2), true);
-        assertEquals(set.length, 2);
-        assertEquals(set.add(3), true);
-        assertEquals(set.length, 3);
-        assertEquals(set.add(2), false); // didn't get added
-        assertEquals(set.length, 3);
+        assertEquals(0, set.length);
+        assertEquals(true, set.add(1));
+        assertEquals(1, set.length);
+        assertEquals(true, set.add(2));
+        assertEquals(2, set.length);
+        assertEquals(true, set.add(3));
+        assertEquals(3, set.length);
+        assertEquals(false, set.add(2)); // didn't get added
+        assertEquals(3, set.length);
     }
 
     public function testString()
@@ -45,9 +45,9 @@ class TestSet extends haxe.unit.TestCase
         set.add("112");
         set.add("122");
         set.add("113");
-        assertEquals(set.length, 3);
-        assertEquals(set.remove( function(ii) return StringTools.startsWith(ii, "11") ), 2);
-        assertEquals(set.length, 1);
+        assertEquals(3, set.length);
+        assertEquals(2, set.remove( function(ii) return StringTools.startsWith(ii, "11") ));
+        assertEquals(1, set.length);
         assertTrue(set.has("122"));
     }
 
@@ -70,7 +70,7 @@ class TestSet extends haxe.unit.TestCase
         set.add(2);
         assertFalse(set.has(3));
         assertFalse(set.has(4));
-        assertEquals(set.union([3,4]), 2);
+        assertEquals(2, set.union([3,4]));
         assertTrue(set.has(1));
         assertTrue(set.has(2));
         assertTrue(set.has(3));
@@ -84,7 +84,7 @@ class TestSet extends haxe.unit.TestCase
         set.add(2);
         assertTrue(set.has(1));
         assertTrue(set.has(2));
-        assertEquals(set.intersection([2,3,4]), 1);
+        assertEquals(1, set.intersection([2,3,4]));
         assertFalse(set.has(1));
         assertTrue(set.has(2));
         assertFalse(set.has(3));
@@ -96,7 +96,7 @@ class TestSet extends haxe.unit.TestCase
         set.add(1);
         set.add(2);
         set.add(3);
-        assertEquals(set.minus([1,3,4]), 2);
+        assertEquals(2, set.minus([1,3,4]));
         assertFalse(set.has(1));
         assertTrue(set.has(2));
         assertFalse(set.has(3));
@@ -110,9 +110,9 @@ class TestSet extends haxe.unit.TestCase
         set.add(2);
         set.add(3);
         var iter = set.iterator();
-        assertEquals(iter.next(), 3);
-        assertEquals(iter.next(), 2);
-        assertEquals(iter.next(), 1);
+        assertEquals(3, iter.next());
+        assertEquals(2, iter.next());
+        assertEquals(1, iter.next());
     }
 
     public function testEquals()
@@ -179,6 +179,35 @@ class TestSet extends haxe.unit.TestCase
         set4.add({f1: 2, f2: "boat"});
         assertTrue(set1.equals(set4, function(a,b) return a.f1==b.f1 ));
         assertFalse(set1.equals(set4));
+    }
+
+    public function testAddCmp()
+    {
+        var set1 = new Set<Obj>();
+        set1.add({f1: 1, f2: "car"}, function(a,b) return a.f1==b.f1);
+        set1.add({f1: 2, f2: "dog"}, function(a,b) return a.f1==b.f1);
+        set1.add({f1: 3, f2: "dog"}, function(a,b) return a.f1==b.f1);
+        set1.add({f1: 3, f2: "cat"}, function(a,b) return a.f1==b.f1);
+        assertEquals(3, set1.length);
+
+        var set1b = new Set<Obj>();
+        set1b.add({f1: 1, f2: "car"});
+        set1b.add({f1: 2, f2: "dog"});
+        set1b.add({f1: 3, f2: "dog"});
+        assertTrue(set1.equals(set1b, function(a,b) return a.f1==b.f1));
+        
+        var set2 = new Set<Obj>();
+        set2.add({f1: 1, f2: "car"}, function(a,b) return a.f2==b.f2);
+        set2.add({f1: 2, f2: "dog"}, function(a,b) return a.f2==b.f2);
+        set2.add({f1: 3, f2: "dog"}, function(a,b) return a.f2==b.f2);
+        set2.add({f1: 3, f2: "cat"}, function(a,b) return a.f2==b.f2);
+        assertEquals(3, set2.length);
+
+        var set2b = new Set<Obj>();
+        set2b.add({f1: 1, f2: "car"});
+        set2b.add({f1: 2, f2: "dog"});
+        set2b.add({f1: 3, f2: "cat"});
+        assertTrue(set1.equals(set1b, function(a,b) return a.f2==b.f2));
     }
 }
 
