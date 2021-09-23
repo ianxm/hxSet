@@ -2,30 +2,20 @@ import haxe.ds.BalancedTree;
 using Lambda;
 
 /**
-   This is a 'set' class for complex objects.  It supports basic set operations.  It is implemented
-   with a balanced tree.  K is the type of the key, V is the type of the value.  You must provide
-   'getKey' which generates a key from an object.
+   This is a simple 'set' class.  It supports basic set operations.  It is implemented with a
+   balanced tree.  V is the type of the value.
  */
-class ComplexSet<K,V>
+class SimpleSet<V>
 {
     public var length(default,null) :Int;
-    private var vals :BalancedTree<K,V>;
-
-    /**
-       override this to use the field of an object as the key
-     */
-    public dynamic function getKey(val :V) :K
-    {
-        throw "getKey must be overridden";
-        return null;
-    }
+    private var vals :BalancedTree<V,Int>;
 
     /**
        create an empty set
      */
     public function new()
     {
-        vals = new BalancedTree<K,V>();
+        vals = new BalancedTree<V,Int>();
         length = 0;
     }
 
@@ -35,10 +25,9 @@ class ComplexSet<K,V>
      */
     public function add(item :V) :Bool
     {
-        var key = getKey(item);
-        if( !vals.exists(key) )
+        if( !vals.exists(item) )
         {
-            vals.set(key, item);
+            vals.set(item, 1);
             length++;
             return true;
         }
@@ -49,11 +38,9 @@ class ComplexSet<K,V>
        remove the item from the set with the given key
        returns true if an item was removed
      */
-    public function remove(?item :V, ?key :K) :Bool
+    public function remove(item :V) :Bool
     {
-        if( item != null )
-            key = getKey(item);
-        if( vals.remove(key) )
+        if( vals.remove(item) )
         {
             length--;
             return true;
@@ -64,9 +51,9 @@ class ComplexSet<K,V>
     /**
         returns true if the given item is in the set
      */
-    inline public function has(?item :V, ?key :K) :Bool
+    inline public function has(item :V) :Bool
     {
-        return vals.exists((key!=null) ? key : getKey(item));
+        return vals.exists(item);
     }
 
     /**
@@ -90,42 +77,41 @@ class ComplexSet<K,V>
     }
 
     /**
-        remove items which are not in the given iterable
+        remove items which are not in the given iterable.
         returns the number of items removed
      */
     public function intersection(otherItems :Iterable<V>) :Int
     {
-        var otherSet = new ComplexSet<K,V>();
-        otherSet.getKey = getKey;
+        var otherSet = new SimpleSet<V>();
         otherSet.union(otherItems);
         var count = 0;
-        for( ii in vals )
+        for( ii in vals.keys() )
             if( !otherSet.has(ii) )
-                count += vals.remove(getKey(ii)) ? 1 : 0;
+                count += vals.remove(ii) ? 1 : 0;
         length -= count;
         return count;
     }
 
     /**
-        remove items that are in the given iterable
+        remove items that are in the given iterable.
         return the number of items removed
      */
     public function minus(otherItems :Iterable<V>) :Int
     {
         var count = 0;
         for( ii in otherItems )
-            count += vals.remove(getKey(ii)) ? 1 : 0;
+            count += vals.remove(ii) ? 1 : 0;
         length -= count;
         return count;
     }
 
     /**
-        check if sets are equal (made up of the same items).  pass in a cmp function to override item comparison. O(n^2).
-        return true if both sets contain the same (or equivalent if cmp is provided) items
+        check if sets are equal (made up of the same items).
+        return true if both sets contain the same items
      */
-    public function equals(otherSet :ComplexSet<K,V>) :Bool
+    public function equals(otherSet :SimpleSet<V>) :Bool
     {
-        for( ii in vals )
+        for( ii in vals.keys() )
             if( !otherSet.has(ii) )
                 return false;
         return length == otherSet.length;
@@ -136,15 +122,15 @@ class ComplexSet<K,V>
      */
     public function clear()
     {
-        vals = new BalancedTree<K,V>();
+        vals = new BalancedTree<V,Int>();
         length = 0;
     }
 
     /**
-        iterate over items in the set.  order will be filo.
+        iterate over items in the set.  order will be fifo.
      */
     public function iterator()
     {
-        return vals.iterator();
+        return vals.keys();
     }
 }

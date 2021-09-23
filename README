@@ -1,46 +1,110 @@
 hxSet
 -----
 
-This is a simple 'set' class.  It supports basic set operations.  It is implemented with a list.
+This contains two 'set' classes.  They supports basic set operations.
+Both are implemented with a balanced tree.
+
+SimpleSet should be used when the value itself should be used in
+comparisons.  ComplexSet should be used if you want to provide a
+function to generate a key from the given value to be used for
+comparison.  For example, use SimpleSet if the set is made up of ints
+or strings.  Use ComplexSet if the set is made up of 'Person' objects,
+and you want to use the 'Person.name' field for comparison.
+
+SimpleSet
+---------
+
+new<V>()
+        create an empty set
+        V is the type for the values the set will contain
 
 length
         property that tells the number of items in the set
 
-new()
-        create an empty set
-
-add(item :T, ?cmp :T->T->Bool) :Bool
+add(item :V) :Bool
         add an item to the set
         returns true if it was added
 
-remove(pred :T->Bool) :Int
-       remove items from the set that are selected by the given predicate
-       returns the number of items removed
+remove(item :V) :Bool
+       remove the given item from the set
+       returns true if it was removed
 
-has(item :T, ?cmp :T->T->Bool)
+has(item :V) :Bool
         returns true if the given item is in the set
 
 isEmpty()
         returns true if the set is empty
 
-union(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
+union(otherItems :Iterable<V>) :Int
         add the items from the given iterable to the set
         returns the number of items added
 
-intersection(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
+intersection(otherItems :Iterable<V>) :Int
         remove items which are not in the given iterable
         returns the number of items removed
 
-minus(otherItems :Iterable<T>, ?cmp :T->T->Bool) :Int
+minus(otherItems :Iterable<V>) :Int
         remove items what are in given iterable
         return the number of items removed
 
-equals(otherSet :Set<T>, ?cmp :T->T->Bool) :Bool
-        check if sets are equal (made up of the same items).  pass in a cmp function to override item comparison. O(n^2).
-        return true if both sets contain the same (or equivalent if cmp is provided) items
+equals(otherSet :Set<V>) :Bool
+        check if sets are equal (made up of the same items).
+        return true if both sets contain the same items
 
 clear()
         empty the set
 
 iterator()
-        iterate over items in the set.  order will be filo.
+        iterate over items in the set.  order will be fifo.
+
+
+ComplexSet
+----------
+
+new<K,V>()
+        create an empty set
+        K is the type that will be used to compare values
+        V is the value's type
+
+getKey(value :V) :K
+        dynamic function that must be overridden to return a key from a value
+
+length
+        property that tells the number of items in the set
+
+add(item :V) :Bool
+        add an item to the set
+        returns true if it was added
+
+remove(?item :V, ?key :K) :Bool
+       remove the given item (or item found using the given key) from the set
+       returns true if it was removed
+
+has(?item :V, ?key :K) :Bool
+        returns true if the given item is in the set
+
+isEmpty()
+        returns true if the set is empty
+
+union(otherItems :Iterable<V>) :Int
+        add the items from the given iterable to the set
+        returns the number of items added
+
+intersection(otherItems :Iterable<V>) :Int
+        remove items which are not in the given iterable
+        returns the number of items removed
+
+minus(otherItems :Iterable<V>) :Int
+        remove items what are in given iterable
+        return the number of items removed
+
+equals(otherSet :Set<V>) :Bool
+        check if sets are equal (made up of the same items).
+        return true if both sets contain the same items
+
+clear()
+        empty the set
+
+iterator()
+        iterate over items in the set.  order will be fifo.
+
