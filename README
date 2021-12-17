@@ -4,12 +4,12 @@ hxSet
 This contains two 'set' classes.  They supports basic set operations.
 Both are implemented with a balanced tree.
 
-SimpleSet should be used when the value itself should be used in
-comparisons.  ComplexSet should be used if you want to provide a
-function to generate a key from the given value to be used for
-comparison.  For example, use SimpleSet if the set is made up of ints
-or strings.  Use ComplexSet if the set is made up of 'Person' objects,
-and you want to use the 'Person.name' field for comparison.
+Set should be used if you want to provide a function to generate a key
+from the given value to be used for comparison. SimpleSet should be
+used when the value itself should be used in comparisons.  For
+example, use SimpleSet if the set is made up of ints or strings.  Use
+ComplexSet if the set is made up of 'Person' objects, and you want to
+use the 'Person.name' field for comparison.
 
 SimpleSet
 ---------
@@ -58,7 +58,7 @@ iterator()
         iterate over items in the set.  order will be fifo.
 
 
-ComplexSet
+Set
 ----------
 
 new<K,V>()
@@ -82,6 +82,9 @@ remove(?item :V, ?key :K) :Bool
 
 has(?item :V, ?key :K) :Bool
         returns true if the given item is in the set
+
+get(key :K) :V
+        returns the value for the given key
 
 isEmpty()
         returns true if the set is empty

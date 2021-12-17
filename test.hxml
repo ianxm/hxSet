@@ -1,3 +1,4 @@
 -neko test.n
 -main TestSuite
+-lib hx3compat
 -cmd neko test.n

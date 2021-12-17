@@ -1,6 +1,6 @@
 class TestSimpleSet extends haxe.unit.TestCase
 {
-    public function testHas()
+    public function testSimpleHas()
     {
         var set = new SimpleSet<Int>();
         assertEquals(true, set.add(1));
@@ -13,7 +13,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertFalse(set.has(101));
     }
 
-    public function testLength()
+    public function testSimpleLength()
     {
         var set = new SimpleSet<Int>();
         assertEquals(0, set.length);
@@ -27,7 +27,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertEquals(3, set.length);
     }
 
-    public function testString()
+    public function testSimpleString()
     {
         var set = new SimpleSet<String>();
         set.add("one");
@@ -39,7 +39,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertFalse(set.has("four"));
     }
 
-    public function testRemove()
+    public function testSimpleRemove()
     {
         var set = new SimpleSet<String>();
         set.add("112");
@@ -53,7 +53,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertTrue(set.has("122"));
     }
 
-    public function testClear()
+    public function testSimpleClear()
     {
         var set = new SimpleSet<Int>();
         set.add(1);
@@ -65,7 +65,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertFalse(set.has(2));
     }
 
-    public function testUnion()
+    public function testSimpleUnion()
     {
         var set = new SimpleSet<Int>();
         set.add(1);
@@ -79,7 +79,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertTrue(set.has(4));
     }
 
-    public function testIntersection()
+    public function testSimpleIntersection()
     {
         var set = new SimpleSet<Int>();
         set.add(1);
@@ -92,7 +92,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertFalse(set.has(3));
     }
 
-    public function testMinus()
+    public function testSimpleMinus()
     {
         var set = new SimpleSet<Int>();
         set.add(1);
@@ -105,7 +105,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertFalse(set.has(4));
     }
 
-    public function testIter()
+    public function testSimpleIter()
     {
         var set = new SimpleSet<Int>();
         set.add(1);
@@ -117,7 +117,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertEquals(3, iter.next());
     }
 
-    public function testEquals()
+    public function testSimpleEquals()
     {
         var set1 = new SimpleSet<Int>();
         set1.add(1);
@@ -140,7 +140,7 @@ class TestSimpleSet extends haxe.unit.TestCase
         assertFalse(set1.equals(set4));
     }
 
-    public function testEqualsString()
+    public function testSimpleEqualsString()
     {
         var set1 = new SimpleSet<String>();
         set1.add("car");

@@ -1,8 +1,8 @@
-class TestComplexSet extends haxe.unit.TestCase
+class TestSet extends haxe.unit.TestCase
 {
     public function testHas()
     {
-        var set = new ComplexSet<Int,Int>();
+        var set = new Set<Int,Int>();
         set.getKey = function(val) return val;
         assertEquals(true, set.add(1));
         assertEquals(true, set.add(2));
@@ -16,7 +16,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testLength()
     {
-        var set = new ComplexSet<Int,Int>();
+        var set = new Set<Int,Int>();
         set.getKey = function(val) return val;
         assertEquals(0, set.length);
         assertTrue(set.add(1));
@@ -31,7 +31,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testString()
     {
-        var set = new ComplexSet<String,String>();
+        var set = new Set<String,String>();
         set.getKey = function(val) return val;
         set.add("one");
         set.add("two");
@@ -44,7 +44,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testRemove()
     {
-        var set = new ComplexSet<String,String>();
+        var set = new Set<String,String>();
         set.getKey = function(val) return val;
         set.add("112");
         set.add("122");
@@ -58,7 +58,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testClear()
     {
-        var set = new ComplexSet<Int,Int>();
+        var set = new Set<Int,Int>();
         set.getKey = function(val) return val;
         set.add(1);
         set.add(2);
@@ -71,7 +71,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testUnion()
     {
-        var set = new ComplexSet<Int,Int>();
+        var set = new Set<Int,Int>();
         set.getKey = function(val) return val;
         set.add(1);
         set.add(2);
@@ -86,7 +86,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testIntersection()
     {
-        var set = new ComplexSet<Int,Int>();
+        var set = new Set<Int,Int>();
         set.getKey = function(val) return val;
         set.add(1);
         set.add(2);
@@ -100,7 +100,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testMinus()
     {
-        var set = new ComplexSet<Int,Int>();
+        var set = new Set<Int,Int>();
         set.getKey = function(val) return val;
         set.add(1);
         set.add(2);
@@ -114,7 +114,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testIter()
     {
-        var set = new ComplexSet<Int,Int>();
+        var set = new Set<Int,Int>();
         set.getKey = function(val) return val;
         set.add(1);
         set.add(2);
@@ -127,24 +127,24 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testEquals()
     {
-        var set1 = new ComplexSet<Int,Int>();
+        var set1 = new Set<Int,Int>();
         set1.getKey = function(val) return val;
         set1.add(1);
         set1.add(2);
 
-        var set2 = new ComplexSet<Int,Int>();
+        var set2 = new Set<Int,Int>();
         set2.getKey = function(val) return val;
         set2.add(2);
         set2.add(1);
         assertTrue(set1.equals(set2));
 
-        var set3 = new ComplexSet<Int,Int>();
+        var set3 = new Set<Int,Int>();
         set3.getKey = function(val) return val;
         set3.add(1);
         set3.add(3);
         assertFalse(set1.equals(set3));
 
-        var set4 = new ComplexSet<Int,Int>();
+        var set4 = new Set<Int,Int>();
         set4.getKey = function(val) return val;
         set4.add(1);
         set4.add(2);
@@ -154,18 +154,18 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testEqualsString()
     {
-        var set1 = new ComplexSet<String,String>();
+        var set1 = new Set<String,String>();
         set1.getKey = function(val) return val;
         set1.add("car");
         set1.add("boat");
 
-        var set2 = new ComplexSet<String,String>();
+        var set2 = new Set<String,String>();
         set2.getKey = function(val) return val;
         set2.add("boat");
         set2.add("car");
         assertTrue(set1.equals(set2));
 
-        var set3 = new ComplexSet<String,String>();
+        var set3 = new Set<String,String>();
         set3.getKey = function(val) return val;
         set3.add("car");
         set3.add("dog");
@@ -174,7 +174,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testAddCmp()
     {
-        var set1 = new ComplexSet<Int,Obj>();
+        var set1 = new Set<Int,Obj>();
         set1.getKey = function(val) return val.f1;
         set1.add({f1: 1, f2: "car"});
         set1.add({f1: 2, f2: "dog"});
@@ -182,14 +182,14 @@ class TestComplexSet extends haxe.unit.TestCase
         set1.add({f1: 3, f2: "cat"});
         assertEquals(3, set1.length);
 
-        var set1b = new ComplexSet<Int,Obj>();
+        var set1b = new Set<Int,Obj>();
         set1b.getKey = function(val) return val.f1;
         set1b.add({f1: 1, f2: "car"});
         set1b.add({f1: 2, f2: "dog"});
         set1b.add({f1: 3, f2: "dog"});
         assertTrue(set1.equals(set1b));
         
-        var set2 = new ComplexSet<String,Obj>();
+        var set2 = new Set<String,Obj>();
         set2.getKey = function(val) return val.f2;
         set2.add({f1: 1, f2: "car"});
         set2.add({f1: 2, f2: "dog"});
@@ -197,7 +197,7 @@ class TestComplexSet extends haxe.unit.TestCase
         set2.add({f1: 3, f2: "cat"});
         assertEquals(3, set2.length);
 
-        var set2b = new ComplexSet<String,Obj>();
+        var set2b = new Set<String,Obj>();
         set2b.getKey = function(val) return val.f2;
         set2b.add({f1: 1, f2: "car"});
         set2b.add({f1: 2, f2: "dog"});
@@ -207,7 +207,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testHasCmp()
     {
-        var set1 = new ComplexSet<String,Obj>();
+        var set1 = new Set<String,Obj>();
         set1.getKey = function(val) return val.f2;
         var obj1 = {f1: 1, f2: "car"};
         set1.add(obj1);
@@ -221,7 +221,7 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testRemoveCmp()
     {
-        var set1 = new ComplexSet<String,Obj>();
+        var set1 = new Set<String,Obj>();
         set1.getKey = function(val) return val.f2;
         var obj1 = {f1: 1, f2: "car"};
         set1.add(obj1);
@@ -240,12 +240,12 @@ class TestComplexSet extends haxe.unit.TestCase
 
     public function testEqualsCmp()
     {
-        var set1 = new ComplexSet<Int,Obj>();
+        var set1 = new Set<Int,Obj>();
         set1.getKey = function(val) return val.f1;
         set1.add({f1: 1, f2: "car"});
         set1.add({f1: 2, f2: "dog"});
 
-        var set2 = new ComplexSet<Int,Obj>();
+        var set2 = new Set<Int,Obj>();
         set2.getKey = function(val) return val.f1;
         set2.add({f1: 2, f2: "dog"});
         assertFalse(set1.equals(set2));

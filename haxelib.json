@@ -4,8 +4,8 @@
   "tags": ["cross"],
   "description": "simple set class",
   "contributors": ["ianxm"],
-  "releasenote": "split into SimpleSet and ComplexSet",
-  "version": "1.6.0",
+  "releasenote": "derive SimpleSet from Set",
+  "version": "2.0.0",
   "url": "https://github.com/ianxm/hxSet",
   "dependencies": {
 
